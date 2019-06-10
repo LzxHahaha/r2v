@@ -71,3 +71,6 @@ typings/
 
 # output files
 dist/
+
+.idea
+.vscode
