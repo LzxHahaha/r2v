@@ -1,11 +1,12 @@
 define([
-    'util/path',
-    'baseComponent/path',
+    'pro/util',
+    'pro/BaseComponent',
     'text!./index.html',
-    'mixin/path',
-    'component/path'
+    './mixin.js',
+    './component.js'
 ], function(_, BaseComponent, html, mixin, component) {
-    return BaseComponent.extend({
+    var Notify = NEKUI.Notify;
+    var component = BaseComponent.extend({
         config: function(data) {
             _.extend(data, {
                 template: html,
@@ -28,8 +29,15 @@ define([
                     this.data.value = 2;
                 }).bind(this)
             });
+        },
+        foo: function() {
+            Notify.success('message');
+            return true;
         }
-    })
-        .use(mixin)
+    });
+        
+    component.use(mixin)
         .component('tag', component);
+
+    return component;
 });
