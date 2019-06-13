@@ -13,7 +13,7 @@ export default class ComponentModule extends Module {
 
     constructor(path: string, isLoaded = false) {
         super(path);
-        // 公共组件直接加载，无须再次调用
+        // 公共组件直接标记加载完成
         this.loaded = isLoaded;
     }
 

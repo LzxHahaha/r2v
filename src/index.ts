@@ -9,6 +9,6 @@ const resolver = new Resolver(
     new Set(['pro/BaseComponent']),
     new Set(['pro/util'])
 );
-const entry = resolver.start('./index.js');
-
-console.log(entry);
+resolver.start('./index.js')
+    .then(entry => console.log(entry))
+    .then(() => console.log(resolver.modules))
