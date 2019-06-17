@@ -6,10 +6,10 @@
   "author": "hzliangzuxuan <hzliangzuxuan@corp.netease.com>",
   "license": "MIT",
   "scripts": {
-    "antlr": "cd ./src/template && java -Xmx500M -cp \"/usr/local/lib/antlr-4.7.1-complete.jar:$CLASSPATH\" org.antlr.v4.Tool -Dlanguage=JavaScript ./Regular.g4 -o ./antlr",
-    "grun": "cd ./src/template/antlr && java -Xmx500M -cp \"/usr/local/lib/antlr-4.7.1-complete.jar:$CLASSPATH\" org.antlr.v4.gui.TestRig Regular r"
+    "antlr": "node ./build"
   },
   "devDependencies": {
+    "@types/antlr4": "^4.7.0",
     "@types/babel-traverse": "^6.25.5",
     "@types/babel-types": "^7.0.7",
     "@types/babylon": "^6.16.5",
@@ -17,6 +17,7 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
+    "antlr4": "4.7.1",
     "babel-traverse": "^6.26.0",
     "babel-types": "^6.26.0",
     "babylon": "^6.18.0"
