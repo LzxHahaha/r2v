@@ -48,5 +48,5 @@ htmlMisc
 
 htmlComment
     : HTML_COMMENT
-    | REGULAR_COMMENT
+    | RGL_COMMENT
     ;

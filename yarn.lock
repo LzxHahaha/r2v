@@ -4,8 +4,8 @@
 
 "@types/antlr4@^4.7.0":
   version "4.7.0"
-  resolved "https://registry.npmjs.org/@types/antlr4/-/antlr4-4.7.0.tgz#e6300119bddff6e23f5bbd299f5cf3c722a6249b"
-  integrity sha512-WdyHH4PHxBQkeWoRTbuC/dvf0QErJpJE4UpESQSRmKoMER15DCLFHAHQjkwevMKQie0kqawS/eTY563GGMbz/g==
+  resolved "https://registry.npm.taobao.org/@types/antlr4/download/@types/antlr4-4.7.0.tgz#e6300119bddff6e23f5bbd299f5cf3c722a6249b"
+  integrity sha1-5jABGb3f9uI/W70pn1zzxyKmJJs=
 
 "@types/babel-traverse@^6.25.5":
   version "6.25.5"
@@ -27,9 +27,9 @@
     "@types/babel-types" "*"
 
 "@types/node@^12.0.7":
-  version "12.0.7"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.0.7.tgz#4f2563bad652b2acb1722d7e7aae2b0ff62d192c"
-  integrity sha1-TyVjutZSsqyxci1+eq4rD/YtGSw=
+  version "12.0.8"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.0.8.tgz#551466be11b2adc3f3d47156758f610bd9f6b1d8"
+  integrity sha1-VRRmvhGyrcPz1HFWdY9hC9n2sdg=
 
 ansi-regex@^2.0.0:
   version "2.1.1"
@@ -43,7 +43,7 @@ ansi-styles@^2.2.1:
 
 antlr4@4.7.1:
   version "4.7.1"
-  resolved "http://rnpm.hz.netease.com/antlr4/download/antlr4-4.7.1.tgz#69984014f096e9e775f53dd9744bf994d8959773"
+  resolved "https://registry.npm.taobao.org/antlr4/download/antlr4-4.7.1.tgz#69984014f096e9e775f53dd9744bf994d8959773"
   integrity sha1-aZhAFPCW6ed19T3ZdEv5lNiVl3M=
 
 babel-code-frame@^6.26.0:
@@ -113,7 +113,7 @@ chalk@^1.1.3:
 
 core-js@^2.4.0:
   version "2.6.9"
-  resolved "https://registry.npm.taobao.org/core-js/download/core-js-2.6.9.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcore-js%2Fdownload%2Fcore-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
+  resolved "https://registry.npm.taobao.org/core-js/download/core-js-2.6.9.tgz?cache=0&sync_timestamp=1560599811627&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcore-js%2Fdownload%2Fcore-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
   integrity sha1-a0shRiDINBUuF5Mjcn/Bl0GwhPI=
 
 debug@^2.6.8:
@@ -202,6 +202,6 @@ to-fast-properties@^1.0.3:
   integrity sha1-uDVx+k2MJbguIxsG46MFXeTKGkc=
 
 typescript@^3.4.5:
-  version "3.5.1"
-  resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.5.1.tgz#ba72a6a600b2158139c5dd8850f700e231464202"
-  integrity sha1-unKmpgCyFYE5xd2IUPcA4jFGQgI=
+  version "3.5.2"
+  resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.5.2.tgz#a09e1dc69bc9551cadf17dba10ee42cf55e5d56c"
+  integrity sha1-oJ4dxpvJVRyt8X26EO5Cz1Xl1Ww=

@@ -1,0 +1,21 @@
+<div>
+    {!test html!}
+    <custom-component attr1="val" attr2={val} attr3="{val}" attr4={{val:1}} on-change={this.onChange($event)}>
+        <span>text</span><br>
+        <span>{jsText}</span>
+        <span>{jsVal | filter}</span>
+        <span>{jsVal | filter: 1}</span>
+        <span>{jsVal | filter: 1, 2}</span>
+        <span>{jsVal | filter: 1, 2 | otherFilter}</span>
+    </custom-component>
+    {#list list as item}
+    <span>{item}: {item_index}</span>
+    {/list}
+    {#if a === 1}
+        <span>a</span>
+    {#elseif b === 2}
+        <span>b</span>
+    {#else}
+        <span>c</span>
+    {/if}
+</div>

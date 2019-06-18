@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/LzxHahaha/r2v.git",
-  "author": "hzliangzuxuan <hzliangzuxuan@corp.netease.com>",
+  "author": "LzxHahaha <lzxglhf@live.com>",
   "license": "MIT",
   "scripts": {
     "antlr": "node ./build"
