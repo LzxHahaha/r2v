@@ -1,5 +1,7 @@
 lexer grammar RegularLexer;
 
+import ExpressionLexer;
+
 options {
     language=JavaScript;
 }
@@ -20,7 +22,9 @@ TAG_OPEN
     : '<' -> pushMode(TAG)
     ;
 
-
+RGL_EXPR_OPEN
+    : '{' -> pushMode(RGL_EXPR)
+    ;
 
 HTML_TEXT
     : ~[<{]+
@@ -42,6 +46,23 @@ TAG_SLASH
 
 TAG_EQUALS
     : '=' -> pushMode(ATTVALUE)
+    ;
+
+SELF_CLOSING_TAG_NAME
+    : 'area'
+    | 'base'
+    | 'br'
+    | 'col'
+    | 'embed'
+    | 'hr'
+    | 'img'
+    | 'input'
+    | 'link'
+    | 'meta'
+    | 'param'
+    | 'source'
+    | 'track'
+    | 'wbr'
     ;
 
 TAG_NAME
@@ -93,36 +114,7 @@ ATTVALUE_VALUE
 ATTRIBUTE
     : DOUBLE_QUOTE_STRING
     | SINGLE_QUOTE_STRING
-    | ATTCHARS
-    | HEXCHARS
-    | DECCHARS
-    ;
-
-fragment ATTCHAR
-    : '-'
-    | '_'
-    | '.'
-    | '/'
-    | '+'
-    | ','
-    | '?'
-    | '='
-    | ':'
-    | ';'
-    | '#'
-    | [0-9a-zA-Z]
-    ;
-
-fragment ATTCHARS
-    : ATTCHAR+ ' '?
-    ;
-
-fragment HEXCHARS
-    : '#' [0-9a-fA-F]+
-    ;
-
-fragment DECCHARS
-    : [0-9]+ '%'?
+    | DIGIT
     ;
 
 fragment DOUBLE_QUOTE_STRING
