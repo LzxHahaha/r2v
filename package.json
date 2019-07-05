@@ -6,7 +6,8 @@
   "author": "LzxHahaha <lzxglhf@live.com>",
   "license": "MIT",
   "scripts": {
-    "antlr": "node ./build"
+    "antlr": "node ./build/antlr.js",
+    "antlr:java": "node ./build/antlr.java.js"
   },
   "devDependencies": {
     "@types/antlr4": "^4.7.0",

@@ -2,7 +2,6 @@ parser grammar RegularParser;
 
 options {
     tokenVocab=RegularLexer;
-    language=JavaScript;
 }
 
 htmlElements
@@ -17,7 +16,7 @@ htmlElement
     ;
 
 htmlContent
-    : htmlChardata? ((htmlElement | htmlComment) htmlChardata?)*
+    : htmlChardata? ((rglStatement | htmlElement | htmlComment) htmlChardata?)*
     ;
 
 htmlAttribute
@@ -30,7 +29,10 @@ htmlAttributeName
     ;
 
 htmlAttributeValue
-    : ATTVALUE_VALUE
+    : DOUBLE_QUOTE rglStatement DOUBLE_QUOTE
+    | SINGLE_QUOTE rglStatement SINGLE_QUOTE
+    | rglStatement
+    | ATTVALUE_VALUE
     ;
 
 htmlSelfClosingTagName
@@ -54,4 +56,40 @@ htmlMisc
 htmlComment
     : HTML_COMMENT
     | RGL_COMMENT
+    ;
+
+rglStatement
+    : RGL_EXPR_OPEN rglRuleOpen CLOSE_BRACE
+    | RGL_EXPR_OPEN rglRuleClose CLOSE_BRACE
+    | RGL_EXPR_OPEN rglExpr rglFilters CLOSE_BRACE
+    ;
+
+rglRuleOpen
+    : HASH (IF | ELSEIF | LIST | INC) rglExpr
+    | HASH ELSE
+    ;
+
+rglRuleClose
+    : OPEN_BRACE DIVIDE (IF | LIST)
+    ;
+
+rglExpr
+    : 
+    ;
+
+rglFilters
+    : rglFilter+
+    |
+    ;
+
+rglFilter
+    : SEA_WS* FILTER_START SEA_WS* ID rglFilterParams
+    ;
+
+rglFilterParams
+    : COLON rglFilterParam (COMMA rglFilterParam)*
+    |
+    ;
+rglFilterParam
+    : 
     ;
