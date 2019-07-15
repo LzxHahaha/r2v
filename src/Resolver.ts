@@ -78,18 +78,18 @@ export default class Resolver {
      * @param modulePath Absolute path.
      */
     private createModule(modulePath: string): Module {
-        let module: Module;
         if (this.globalComponents.has(modulePath)) {
-            module = new ComponentModule(modulePath, true);
+            return new ComponentModule(modulePath, true);
         } else if (this.globalModules.has(modulePath)) {
-            module = new ObjectModule(modulePath);
+            return new ObjectModule(modulePath);
+        } else if (/\.js$/.test(modulePath)) {
+            return new ComponentModule(modulePath, false, this.createModule.bind(this));
         } else if (/\.html$/.test(modulePath)) {
-            module = new TemplateModule(modulePath);
+            return new TemplateModule(modulePath);
         } else if (/\.(css|less|sass|scss)/.test(modulePath)) {
-            module = new StyleModule(modulePath);
+            return new StyleModule(modulePath);
         } else {
-            module = new UnknownModule(modulePath);
+            return new UnknownModule(modulePath);
         }
-        return module;
     }
 }

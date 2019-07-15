@@ -3,6 +3,7 @@ import traverse, { NodePath } from 'babel-traverse';
 import * as babylon from 'babylon';
 
 import Module, { ModuleType } from './Module';
+import UnknownModule from './UnknownModule';
 
 /**
  * 组件类型，支持extend/use/component/filter等操作
@@ -10,11 +11,20 @@ import Module, { ModuleType } from './Module';
 export default class ComponentModule extends Module {
     readonly type = ModuleType.Component;
     dependencies: string[] = [];
+    private varStack: Map<string, ModuleType>[] = [new Map()];
 
-    constructor(path: string, isLoaded = false) {
+    private get varStackTop() {
+        return this.varStack[this.varStack.length - 1];
+    }
+
+    constructor(
+        path: string,
+        isLoaded: boolean = false,
+        private loadModule: (key: string) => Module = (key: string) => new UnknownModule(key)
+    ) {
         super(path);
         // 公共组件直接标记加载完成
-        this.loaded = isLoaded;
+        this.loaded = !!isLoaded;
     }
 
     async load() {
@@ -27,6 +37,16 @@ export default class ComponentModule extends Module {
         traverse(ast, this.rootVisitor, undefined, this);
     }
 
+    private findVar(name: string) {
+        for (let i = this.varStack.length - 1; i >= 0; --i) {
+            const scope = this.varStack[i];
+            if (scope.has(name)) {
+                return scope.get(name);
+            }
+        }
+        return null;
+    }
+
     private readonly rootVisitor = {
         CallExpression(path: NodePath<t.CallExpression>, state: ComponentModule) {
             const callee = path.node.callee;
@@ -35,11 +55,17 @@ export default class ComponentModule extends Module {
             }
 
             const args = path.node.arguments;
-            const dependencies = args[0] as t.ArrayExpression;
+            const dependencies = (args[0] as t.ArrayExpression).elements;
+            const vars = (args[1] as t.FunctionExpression).params as t.Identifier[];
+            const max = Math.min(dependencies.length, vars.length);
             
-            for (const node of dependencies.elements) {
-                let importPath = (node as t.StringLiteral).value;
-                state.dependencies.push(importPath);
+            for (let i = 0; i < max; ++i) {
+                const depPath = (dependencies[i] as t.StringLiteral).value;
+                state.dependencies.push(depPath);
+
+                const varName = vars[i].name;
+                const module = state.loadModule(depPath);
+                state.varStackTop.set(varName, module.type);
             }
 
             path.traverse(state.bodyVisitor, state);
@@ -48,23 +74,20 @@ export default class ComponentModule extends Module {
     }
 
     private readonly bodyVisitor = {
-        CallExpression(path: NodePath<t.CallExpression>) {
+        CallExpression(path: NodePath<t.CallExpression>, state: ComponentModule) {
             const callee = path.node.callee;
             if (!t.isMemberExpression(callee)) {
                 return;
             }
             const { property, object } = callee;
-            if (!t.isIdentifier(property) || !t.isIdentifier(object)) {
+            if (!t.isIdentifier(property) || !t.isIdentifier(object) || property.name !== 'extend') {
                 return;
             }
-            console.log(property.name);
-            if (property.name === 'extend' && object.name) {}
-        },
-        FunctionExpression(path: NodePath<t.FunctionExpression>) {
-            console.log(path);
-            // TODO: get params, read config to ignore global modules
-            // goto return expression
-            // get mixins/componets etc. and merge mixin if used
+            const callerType = state.findVar(object.name);
+            if (callerType !== ModuleType.Component) {
+                return;
+            }
+            path.traverse(state.defineVisitor);
         }
     }
 
