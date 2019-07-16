@@ -11,7 +11,7 @@ childProcess.execSync(`${antlr4} ./RegularLexer.g4 ./RegularParser.g4 && cd ./ja
 });
 
 const grun = 'java -Xmx500M -cp "/usr/local/lib/antlr-4.7.1-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig';
-childProcess.execSync(`javac -g *.java && ${grun} Regular htmlElements -gui ../../../resources/test.html`, {
+childProcess.execSync(`javac -g *.java && ${grun} Regular htmlElements -gui ../../../resources/pure.html`, {
     cwd: libCwd,
     stdio: 'inherit'
 });

@@ -47,6 +47,7 @@ export default class ComponentModule extends Module {
         return null;
     }
 
+    // 查找 define 函数，通过依赖引入路径推断函数参数类型
     private readonly rootVisitor = {
         CallExpression(path: NodePath<t.CallExpression>, state: ComponentModule) {
             const callee = path.node.callee;
@@ -55,12 +56,12 @@ export default class ComponentModule extends Module {
             }
 
             const args = path.node.arguments;
-            const dependencies = (args[0] as t.ArrayExpression).elements;
+            const dependencies = (args[0] as t.ArrayExpression).elements as t.StringLiteral[];
             const vars = (args[1] as t.FunctionExpression).params as t.Identifier[];
             const max = Math.min(dependencies.length, vars.length);
             
             for (let i = 0; i < max; ++i) {
-                const depPath = (dependencies[i] as t.StringLiteral).value;
+                const depPath = dependencies[i].value;
                 state.dependencies.push(depPath);
 
                 const varName = vars[i].name;
@@ -73,6 +74,7 @@ export default class ComponentModule extends Module {
         }
     }
 
+    // 查找 Component.extend
     private readonly bodyVisitor = {
         CallExpression(path: NodePath<t.CallExpression>, state: ComponentModule) {
             const callee = path.node.callee;
@@ -91,13 +93,23 @@ export default class ComponentModule extends Module {
         }
     }
 
+    // 读取函数定义
     private readonly defineVisitor = {
-        // get functions from config
+        ObjectProperty(path: NodePath<t.ObjectProperty>) {
+            const key = path.node.key as t.Identifier;
+            if (key.name === 'config') {
+                // get default data
+                // to created
+            } else if (key.name === 'init') {
+                // to mounted
+            } else {
+                // ...
+            }
+        }
     }
 
+    // 读取函数内容，修改 data/生命周期/watch/computed 等
     private readonly functionVisitor = {
-        // change this.data.xxx to this.xxx
-        // change life cycle, watch and computed
-        // save undefined fields from this.data.xxx (set to props)
+        //
     }
 }
