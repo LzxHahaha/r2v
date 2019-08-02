@@ -25,6 +25,7 @@ export default abstract class Module {
         return new Promise((resolve, reject) => {
             fs.readFile(this.path, (err, data) => {
                 if (err) {
+                    err.message = `【无法加载文件】${err.message}`;
                     return reject(err);
                 }
                 resolve(data.toString());

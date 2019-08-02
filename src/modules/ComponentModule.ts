@@ -24,7 +24,7 @@ export default class ComponentModule extends Module {
     ) {
         super(path);
         // 公共组件直接标记加载完成
-        this.loaded = !!isLoaded;
+        this.loaded = isLoaded;
     }
 
     async load() {
@@ -90,6 +90,7 @@ export default class ComponentModule extends Module {
                 return;
             }
             path.traverse(state.defineVisitor);
+            path.stop();
         }
     }
 
